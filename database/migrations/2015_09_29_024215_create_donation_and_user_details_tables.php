@@ -33,6 +33,7 @@ class CreateDonationAndUserDetailsTables extends Migration
             $table->string('display_photo')->default('');
             $table->integer('age')->unsigned()->default(0);
             $table->integer('weight')->unsigned()->default(0);
+            $table->string('contact_number')->default('');
             $table->string('sex')->default('');
             $table->string('profession')->default('');
             $table->string('blood_type')->default('');

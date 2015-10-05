@@ -40,9 +40,18 @@ class UserController extends Controller
                 'msg' => 'Unauthorized attempt to register'
             ) );
         }
-        
-        $rules = array('username' => 'required', 'email' => 'required|email|unique:users');
+
+        $rules = array('username' => 'required', 'email' => 'required|email|unique:users', 
+            'password' => 'required|confirmed', 'password_confirmation' => 'required',
+            'date_of_registration' => 'required|date_format:d-m-Y', 'first_name'=>'required',
+            'last_name' => 'required', 'date_of_birth' => 'required|date_format:Y-m-d',
+            'age' => 'required|numeric', 'weigth' => 'required|numeric',
+            'donation_status_details' => 'required_if:donation_status,No'
+            );
         $validator = Validator::make(Request::all(), $rules);
+        /*$validator->sometimes('donation_status_details','required', function($input){
+            return $input->donation_status = 'N';
+        });*/ 
 
         if($validator->fails()){
              return Response::json(array(
@@ -62,15 +71,9 @@ class UserController extends Controller
                 'msg' => 'registration successful!',
             );
         }
-
-        
-
-
         //$first_name = Request::get('first_name');
         //$user_details = UserDetails::add($user, $first_name);
 
-        
- 
         return Response::json( $response );
     }
 
